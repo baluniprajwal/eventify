@@ -16,21 +16,65 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useGetMyManagers } from "@/hooks/useOwner";
+// import { useGetMyManagers } from "@/hooks/useOwner";
 import { AddManagerSheet } from "@/components/owner/AddManagerSheet";
 
 export default function OwnerManagers() {
   const [search, setSearch] = useState("");
-  const { data, isLoading, error } = useGetMyManagers(search);
+  // const { data, isLoading, error } = useGetMyManagers(search);
 
-  if (isLoading) return <p>Loading managers...</p>;
-  if (error) return <p className="text-red-500">Failed to load managers.</p>;
+  // if (isLoading) return <p>Loading managers...</p>;
+  // if (error) return <p className="text-red-500">Failed to load managers.</p>;
 
-  const managers = data?.managers || [];
+  const mockManagers = [
+    {
+      _id: "1",
+      name: "Ravi Kumar",
+      email: "ravi.kumar@example.com",
+      phone: "+91 9876543210",
+      assignedProperties: [
+        { title: "Seaside Villa", city: "Goa" },
+        { title: "Urban Penthouse", city: "Mumbai" },
+      ],
+    },
+    {
+      _id: "2",
+      name: "Aditi Sharma",
+      email: "aditi.sharma@example.com",
+      phone: "+91 9123456789",
+      assignedProperties: [{ title: "Mountain View Cabin", city: "Manali" }],
+    },
+    {
+      _id: "3",
+      name: "Rohan Mehta",
+      email: "rohan.mehta@example.com",
+      phone: "+91 9988776655",
+      assignedProperties: [
+        { title: "Riverside Eco Resort", city: "Rishikesh" },
+        { title: "Desert Oasis Camp", city: "Jaisalmer" },
+        { title: "Seaside Villa", city: "Goa" },
+      ],
+    },
+    {
+      _id: "4",
+      name: "Sneha Patel",
+      email: "sneha.patel@example.com",
+      phone: "+91 9090909090",
+      assignedProperties: [
+        { title: "Urban Penthouse", city: "Mumbai" },
+        { title: "Riverside Eco Resort", city: "Rishikesh" },
+      ],
+    },
+  ];
+
+  const managers = mockManagers.filter(
+    (m) =>
+      m.name.toLowerCase().includes(search.toLowerCase()) ||
+      m.email.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="space-y-8">
-      
       <div className="flex justify-between items-center">
         <Input
           placeholder="Search managers..."
@@ -38,10 +82,9 @@ export default function OwnerManagers() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <AddManagerSheet/>
+        <AddManagerSheet />
       </div>
 
-      
       <div className="rounded-xl border border-border/60 overflow-hidden bg-card shadow-sm">
         <Table>
           <TableHeader>
@@ -58,7 +101,7 @@ export default function OwnerManagers() {
           </TableHeader>
 
           <TableBody>
-            {managers.map((manager:any) => (
+            {managers.map((manager: any) => (
               <TableRow
                 key={manager._id}
                 className="hover:bg-gradient-to-r from-primary/[0.04] to-card transition-colors"
@@ -75,7 +118,7 @@ export default function OwnerManagers() {
 
                 <TableCell>
                   <div className="flex flex-col gap-1">
-                    {manager.assignedProperties.map((p :any, i : any) => (
+                    {manager.assignedProperties.map((p: any, i: any) => (
                       <div key={i} className="flex items-center gap-1 text-sm">
                         <Building className="w-4 h-4 text-muted-foreground" />
                         <span className="text-foreground">{p.title}</span>
@@ -133,3 +176,4 @@ export default function OwnerManagers() {
     </div>
   );
 }
+
