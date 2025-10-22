@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import DashboardLayout from "@/dashboard/DashboardLayout"
 import OwnerDashboard from "@/dashboard/owner/OwnerDashboard"
 import OwnerProperties from "@/dashboard/owner/OwnerProperties"
@@ -17,7 +17,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/" element={<Navigate to="/dashboard/owner" replace />} />
+        <Route path="/dashboard"  element={<DashboardLayout />}>
           <Route path="owner" element={<OwnerDashboard />} />
           <Route path="properties" element={<OwnerProperties />} />
           <Route path="events" element={<OwnerEvents />} />
